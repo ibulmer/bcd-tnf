@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { RouteComponentProps } from "@reach/router";
+import { makeStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import Collapse from "@material-ui/core/Collapse";
 
 type ApiCharacter = {
   created: string;
@@ -34,17 +41,64 @@ type CharacterType = {
   type: string;
 };
 
-type Props = {
-  name: string;
-  origin: string;
-};
+const useStyles = makeStyles({
+  root: {
+    width: 500,
+    marginBottom: "1rem",
+  },
+  showMore: {
+    marginLeft: "auto",
+  },
+});
 
-const Character = ({ name, origin }: Props) => {
+const Character = ({
+  name,
+  origin,
+  gender,
+  id,
+  image,
+  location,
+}: CharacterType) => {
+  const classes = useStyles();
+  const [expanded, setExpanded] = React.useState(false);
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
   return (
-    <div style={{ marginBottom: "1rem" }}>
-      <div>name: {name}</div>
-      <div>origin: {origin}</div>
-    </div>
+    <Card className={classes.root}>
+      <CardContent>
+        <Typography variant="h5" component="h2">
+          name: {name}
+        </Typography>
+        <Typography variant="h5" component="h2">
+          origin: {origin}
+        </Typography>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <Typography variant="h5" component="h2">
+            gender: {gender}
+          </Typography>
+          <Typography variant="h5" component="h2">
+            location: {location}
+          </Typography>
+          <Typography variant="h5" component="h2">
+            <img src={image} alt={name} />
+          </Typography>
+        </Collapse>
+      </CardContent>
+
+      <CardActions disableSpacing>
+        <Button
+          variant="contained"
+          color="primary"
+          className={classes.showMore}
+          onClick={handleExpandClick}
+          aria-expanded={expanded}
+          aria-label="show more"
+        >
+          {expanded ? "Show Less" : "Show More"}
+        </Button>
+      </CardActions>
+    </Card>
   );
 };
 
@@ -56,8 +110,9 @@ export const Characters = (props: RouteComponentProps) => {
       .then((data) => data.json())
       .then((result) => {
         const apiCharacters: ApiCharacter[] = result.results;
-        const frontendCharacters: CharacterType[] = apiCharacters.map(
-          (character) => ({
+        const frontendCharacters: CharacterType[] = apiCharacters
+          .slice(0, 16)
+          .map((character) => ({
             gender: character.gender,
             id: character.id,
             image: character.image,
@@ -67,8 +122,7 @@ export const Characters = (props: RouteComponentProps) => {
             species: character.species,
             status: character.status,
             type: character.type,
-          })
-        );
+          }));
         setCharacters(frontendCharacters);
       });
   }, []);
@@ -81,11 +135,32 @@ export const Characters = (props: RouteComponentProps) => {
         alignItems: "center",
       }}
     >
-      <div>Characters Page</div>
       <div className="characterList">
-        {characters.map(({ name, origin }) => (
-          <Character name={name} origin={origin} />
-        ))}
+        {characters.map(
+          ({
+            gender,
+            id,
+            image,
+            location,
+            name,
+            origin,
+            species,
+            status,
+            type,
+          }) => (
+            <Character
+              gender={gender}
+              id={id}
+              image={image}
+              location={location}
+              name={name}
+              origin={origin}
+              species={species}
+              status={status}
+              type={type}
+            />
+          )
+        )}
       </div>
     </div>
   );

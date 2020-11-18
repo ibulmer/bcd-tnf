@@ -1,7 +1,8 @@
 import React from "react";
-import { Link, Link_Needed_Props } from "@reach/router";
+import { Link } from "@reach/router";
+type LinkProps = React.ComponentProps<typeof Link>;
 
-export const NavLink = (props: Link_Needed_Props) => (
+export const NavLink = (props: LinkProps) => (
   <Link
     {...props}
     getProps={(linkGetProps) => {
