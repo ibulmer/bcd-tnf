@@ -7,6 +7,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Collapse from "@material-ui/core/Collapse";
+import Grid from "@material-ui/core/Grid";
 
 type ApiCharacter = {
   created: string;
@@ -43,7 +44,6 @@ type CharacterType = {
 
 const useStyles = makeStyles({
   root: {
-    width: 500,
     marginBottom: "1rem",
   },
   showMore: {
@@ -55,7 +55,6 @@ const Character = ({
   name,
   origin,
   gender,
-  id,
   image,
   location,
 }: CharacterType) => {
@@ -65,46 +64,57 @@ const Character = ({
     setExpanded(!expanded);
   };
   return (
-    <Card className={classes.root}>
-      <CardContent>
-        <Typography variant="h5" component="h2">
-          name: {name}
-        </Typography>
-        <Typography variant="h5" component="h2">
-          origin: {origin}
-        </Typography>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
+    <Grid item xs={11} md={8}>
+      <Card className={classes.root}>
+        <CardContent>
           <Typography variant="h5" component="h2">
-            gender: {gender}
+            name: {name}
           </Typography>
           <Typography variant="h5" component="h2">
-            location: {location}
+            origin: {origin}
           </Typography>
-          <Typography variant="h5" component="h2">
-            <img src={image} alt={name} />
-          </Typography>
-        </Collapse>
-      </CardContent>
+          <Collapse in={expanded} timeout="auto" unmountOnExit>
+            <Typography variant="h5" component="h2">
+              gender: {gender}
+            </Typography>
+            <Typography variant="h5" component="h2">
+              location: {location}
+            </Typography>
+            <Typography variant="h5" component="h2">
+              <img src={image} alt={name} />
+            </Typography>
+          </Collapse>
+        </CardContent>
 
-      <CardActions disableSpacing>
-        <Button
-          variant="contained"
-          color="primary"
-          className={classes.showMore}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          {expanded ? "Show Less" : "Show More"}
-        </Button>
-      </CardActions>
-    </Card>
+        <CardActions disableSpacing>
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.showMore}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            {expanded ? "Show Less" : "Show More"}
+          </Button>
+        </CardActions>
+      </Card>
+    </Grid>
   );
 };
+
+const useGridStyles = makeStyles({
+  root: {
+    flexGrow: 1,
+    marginTop: "2rem",
+  },
+});
 
 export const Characters = (props: RouteComponentProps) => {
   const defaultCharacters: CharacterType[] = [];
   const [characters, setCharacters] = useState(defaultCharacters);
+  const classes = useGridStyles();
+
   useEffect(() => {
     fetch("https://rickandmortyapi.com/api/character")
       .then((data) => data.json())
@@ -128,14 +138,14 @@ export const Characters = (props: RouteComponentProps) => {
   }, []);
   return (
     <div
-      className="character-page"
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
+    // className="character-page"
+    // style={{
+    //   display: "flex",
+    //   flexDirection: "column",
+    //   alignItems: "center",
+    // }}
     >
-      <div className="characterList">
+      <Grid container spacing={3} className={classes.root} justify={"center"}>
         {characters.map(
           ({
             gender,
@@ -161,7 +171,7 @@ export const Characters = (props: RouteComponentProps) => {
             />
           )
         )}
-      </div>
+      </Grid>
     </div>
   );
 };

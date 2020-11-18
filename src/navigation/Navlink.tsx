@@ -10,7 +10,7 @@ export const NavLink = (props: LinkProps) => (
       // anchor element's propss
       return {
         className:
-          (props.className || "") + (linkGetProps.isCurrent ? "active" : ""),
+          (props.className || "") + (linkGetProps.isCurrent ? " active" : ""),
       };
     }}
   />

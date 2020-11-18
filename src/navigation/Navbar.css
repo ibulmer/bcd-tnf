@@ -1,11 +1,13 @@
 .navbar {
   display: flex;
-  margin-bottom: 1rem;
+  /* margin-bottom: 1rem; */
+  padding: 0.5rem 0;
   justify-content: center;
   background-color: bisque;
   position: fixed;
   top: 0;
   width: 100%;
+  z-index: 999;
 }
 
 .navbar > a {
@@ -13,7 +15,7 @@
   margin: 1% 5%;
   color: darkblue;
   font-weight: 800;
-  font-size: 1.3rem;
+  font-size: 0.8rem;
 }
 
 .navbar > .active {
