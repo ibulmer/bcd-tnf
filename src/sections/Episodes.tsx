@@ -39,6 +39,7 @@ export const Episodes = ({ characters, episodes, episodeIds }: Props) => {
           const episode = episodes[id];
           return (
             <Episode
+              key={id}
               airDate={episode.airDate}
               characterIds={episode.characterIds}
               characters={characters}

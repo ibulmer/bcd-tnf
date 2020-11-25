@@ -8,7 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import Collapse from "@material-ui/core/Collapse";
 import Grid from "@material-ui/core/Grid";
 import { Characters } from "./Characters";
-import { CharacterData, EpisodeData } from "../App";
+import { CharacterData } from "../App";
 
 export type EpisodeType = {
   airDate: string;

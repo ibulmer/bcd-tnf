@@ -36,6 +36,7 @@ export const Characters = ({ characters, characterIds }: Props) => {
           const character = characters[id];
           return (
             <Character
+              key={id}
               episodes={character.episodes}
               gender={character.gender}
               id={character.id}

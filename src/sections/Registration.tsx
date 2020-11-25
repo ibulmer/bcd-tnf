@@ -73,7 +73,7 @@ export const Registration = ({
           <h2>Signup</h2>
           <TextValidator
             ref={usernameRef}
-            label="username"
+            label="Username"
             onBlur={handleBlur}
             onChange={handleChange}
             name="username"
