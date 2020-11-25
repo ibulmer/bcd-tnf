@@ -99,6 +99,7 @@ export const Registration = ({
             onBlur={handleBlur}
             onChange={handleChange}
             name="password"
+            type="password"
             value={password}
             validators={["required"]}
             errorMessages={["this field is required"]}
