@@ -7,7 +7,7 @@ export const NavLink = (props: LinkProps) => (
     {...props}
     getProps={(linkGetProps) => {
       // the object returned here is passed to the
-      // anchor element's propss
+      // anchor element's props
       return {
         className:
           (props.className || "") + (linkGetProps.isCurrent ? " active" : ""),

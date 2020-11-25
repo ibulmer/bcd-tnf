@@ -1,25 +1,20 @@
-.navbar {
+.bottombar {
   display: flex;
-  /* margin: 2rem 0 0 0 0; */
-  padding: 1rem 0 1rem 0;
+  padding: 0.5rem 0;
   justify-content: center;
   background-color: bisque;
   position: fixed;
-  top: 0;
+  bottom: 0;
   width: 100%;
   z-index: 999;
 }
 
-.navbar > a {
+.bottombar > div {
   text-decoration: none;
-  margin: 0% 5%;
-  color: darkblue;
+  margin: 1% 5%;
+  /* color: darkblue; */
   font-weight: 800;
   font-size: 0.75rem;
-}
-
-.navbar > .active {
-  color: darkcyan;
 }
 
 @media (min-width: 768px) {

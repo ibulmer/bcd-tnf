@@ -1,59 +1,53 @@
 import React from "react";
 import { RouteComponentProps } from "@reach/router";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
+import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
+import { Episode } from "./Episode";
+import { CharacterData, EpisodeData } from "../App";
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-    },
-    paper: {
-      padding: theme.spacing(2),
-      textAlign: "center",
-      color: theme.palette.text.secondary,
-    },
-  })
-);
+export type ApiEpisode = {
+  air_date: string;
+  characters: string[];
+  created: string;
+  episode: string;
+  id: number;
+  name: string;
+  url: "https://rickandmortyapi.com/api/episode/1";
+};
 
-export const CenteredGrid = () => {
+const useStyles = makeStyles({
+  root: {
+    flexGrow: 1,
+    margin: "2rem 0",
+  },
+});
+
+interface Props extends RouteComponentProps {
+  characters: CharacterData;
+  episodes: EpisodeData;
+  episodeIds: number[];
+}
+
+export const Episodes = ({ characters, episodes, episodeIds }: Props) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <Paper className={classes.paper}>xs=12</Paper>
-        </Grid>
-        <Grid item xs={6}>
-          <Paper className={classes.paper}>xs=6</Paper>
-        </Grid>
-        <Grid item xs={6}>
-          <Paper className={classes.paper}>xs=6</Paper>
-        </Grid>
-        <Grid item xs={3}>
-          <Paper className={classes.paper}>xs=3</Paper>
-        </Grid>
-        <Grid item xs={3}>
-          <Paper className={classes.paper}>xs=3</Paper>
-        </Grid>
-        <Grid item xs={3}>
-          <Paper className={classes.paper}>xs=3</Paper>
-        </Grid>
-        <Grid item xs={3}>
-          <Paper className={classes.paper}>xs=3</Paper>
-        </Grid>
-      </Grid>
-    </div>
-  );
-};
-
-export const Episodes = (props: RouteComponentProps) => {
-  return (
-    // <div>
-    //   <div>Episodes Page</div>
-    // </div>
-    <CenteredGrid />
+    <Grid container spacing={3} className={classes.root} justify="center">
+      {episodeIds
+        .filter((id) => episodes[id])
+        .map((id) => {
+          const episode = episodes[id];
+          return (
+            <Episode
+              airDate={episode.airDate}
+              characterIds={episode.characterIds}
+              characters={characters}
+              episode={episode.episode}
+              id={episode.id}
+              name={episode.name}
+            />
+          );
+        })}
+    </Grid>
   );
 };
